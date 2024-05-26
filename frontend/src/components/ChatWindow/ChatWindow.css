@@ -12,4 +12,10 @@
 .mamba-msgs {
     text-align: left;
     padding: 1rem;
+    white-space: pre-wrap;
+}
+
+.mamba-msg-container {
+    display: flex;
+
 }

@@ -3,10 +3,8 @@ import axios from 'axios';
 import "./Chat.css"
 import { useNavigate } from "react-router-dom";
 
-import Button from "../../components/Button/Button"
 import PastMessageWidget from "../../components/PastMessageWidget/PastMessageWidget";
 import ChatWindow from "../../components/ChatWindow/ChatWindow";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
 function Chat() {
     let navigate = useNavigate();
@@ -16,7 +14,8 @@ function Chat() {
         newMessage: '',
         isNewMessage: true,
         curUrl: "",
-        messageID: 0
+        messageID: 0,
+        username: ""
     });
 
     useEffect(() => {
@@ -40,14 +39,15 @@ function Chat() {
                 data = response.data;
                 setState((prevState) => ({
                     ...prevState,
-                    messages: data,
+                    messages: data.messages,
+                    username: data.username,
                     isNewMessage: isNewMessage,
                     curUrl: currentUrl,
                     messageID: id
                 }));
             } catch (error) {
                 console.error(error);
-        }
+            }
         };
 
         fetchData();
@@ -80,7 +80,7 @@ function Chat() {
                 response = await axios.get(url);
                 setState((prevState) => ({
                     ...prevState,
-                    messages: response.data,
+                    messages: response.data.messages,
                 }));
             }
         } catch (error) {
@@ -124,6 +124,7 @@ function Chat() {
                         messages={state.messages}
                         newMessage={state.isNewMessage}
                         messageID={state.messageID}
+                        username={state.username}
                     ></ChatWindow>
                 </div>
                 <div className={"input-area"}>
@@ -138,7 +139,7 @@ function Chat() {
                             cols="50"
                         />
                     </form>
-                    <button onClick={handleSubmit}>Send</button>
+                    <button className={"button"} onClick={handleSubmit}>Send</button>
                 </div>
             </div>
         </div>
