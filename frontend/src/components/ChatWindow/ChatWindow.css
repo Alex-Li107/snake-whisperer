@@ -1,0 +1,15 @@
+.chat-window-container {
+    color: white;
+    margin: 2rem;
+}
+
+.user-msgs {
+    text-align: right;
+    background: rgba(45, 45, 47, 0.5);
+    padding: 1rem;
+}
+
+.mamba-msgs {
+    text-align: left;
+    padding: 1rem;
+}

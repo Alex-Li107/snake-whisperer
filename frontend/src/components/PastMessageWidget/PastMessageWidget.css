@@ -1,0 +1,25 @@
+.past-message-widget-wrapper:hover {
+    background: #282c34;
+}
+
+.past-message-widget-wrapper{
+    color: white;
+    text-align: left;
+    font-size: 1.1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.title {
+    margin: 0;
+    padding: 1rem;
+}
+
+.delete-button {
+    margin-right: 1rem;
+}
+
+.delete-button:hover {
+    background: #595d6c;
+}
