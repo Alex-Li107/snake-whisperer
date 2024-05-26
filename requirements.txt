@@ -5,3 +5,7 @@ mamba-ssm==1.0.1
 accelerate==0.25.0
 bitsandbytes==0.41.3
 scipy==1.11.4
+Django==5.0.6
+django-cors-headers==4.3.1
+djangorestframework==3.15.1
+tzdata

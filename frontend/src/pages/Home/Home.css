@@ -1,0 +1,33 @@
+.home-bg {
+    text-align: center;
+    margin: 0 auto;
+    height: 100vh;
+    padding: 20px;
+    background: radial-gradient(circle at bottom left, #696969, #151515);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-box {
+    display: flex;
+    flex-direction: column;
+    background: rgba(238, 238, 238, 0.1);
+    padding: 5rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.button-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+h1{
+    font-size: 3rem;
+    font-weight: normal;
+    flex-basis: 100%;
+}
+
