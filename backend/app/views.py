@@ -42,7 +42,7 @@ class Chat(APIView):
         :param request: the HTTP request with a message
         :return: The entries in the DB
         """
-        return Response(get_all_past_msg(), status=200)
+        return Response({"messages": get_all_past_msg(), "username": request.session['username']}, status=200)
 
     def post(self, request: HttpRequest) -> HttpResponse:
         """
@@ -101,7 +101,7 @@ class ExistingChat(APIView):
         """
         if not PastMessages.objects.filter(pk=pk).exists():
             return Response(status=404)
-        return Response(get_all_past_msg(), status=200)
+        return Response({"messages": get_all_past_msg(), "username": request.session['username']}, status=200)
 
     def put(self, request: HttpRequest, pk: int) -> HttpResponse:
         """
@@ -183,8 +183,23 @@ class Home(APIView):
 
     def get(self, request: HttpRequest) -> HttpResponse:
         """
-        Returns status 200
+        Returns status 200 and the username if it is already in the session
         :param request: the HTTP request
         :return: HTTP response
         """
+        # check if "username" is in the session
+        if "username" in request.session:
+            return Response({"username": request.session['username']}, status=200)
+        else:
+            return Response(status=401)
+
+    def post(self, request: HttpRequest) -> HttpResponse:
+        """
+        Saves the name of the user in a session
+        :param request: the HTTP request
+        :return: HTTP response
+        """
+        data = json.loads(request.body.decode('utf-8'))
+        request.session['username'] = data.get("username", "")
+
         return Response(status=200)
