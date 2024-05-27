@@ -63,7 +63,7 @@ class Chat(APIView):
             content=message
         )]
 
-        mamba_resp = chat(past_messages, message)
+        mamba_resp = chat(past_messages)
 
         if len(message) > 30:
             title = message[:30] + "..."
@@ -126,6 +126,7 @@ class ExistingChat(APIView):
         user_msgs = past_messages["user"]
         mamba_msgs = past_messages["assistant"]
 
+        # construct message history
         messages = []
         for user_message, mamba_message in zip(user_msgs, mamba_msgs):
             messages.append(dict(
@@ -142,7 +143,7 @@ class ExistingChat(APIView):
             content=message
         ))
 
-        mamba_resp = chat(messages, message)
+        mamba_resp = chat(messages)
 
         # create message history json
         user_msgs.append(message)
@@ -172,6 +173,9 @@ class ExistingChat(APIView):
         :param pk: object primary key
         :return: HTTP response if delete is successful
         """
+        # check if the entry in the database exists
+        if not PastMessages.objects.filter(pk=pk).exists():
+            return Response(status=404)
         PastMessages.objects.filter(pk=pk).delete()
         return Response(status=200)
 
@@ -191,7 +195,7 @@ class Home(APIView):
         if "username" in request.session:
             return Response({"username": request.session['username']}, status=200)
         else:
-            return Response(status=401)
+            return Response(status=204)
 
     def post(self, request: HttpRequest) -> HttpResponse:
         """
@@ -200,6 +204,11 @@ class Home(APIView):
         :return: HTTP response
         """
         data = json.loads(request.body.decode('utf-8'))
-        request.session['username'] = data.get("username", "")
 
+        # additional check to ensure username is not empty (frontend would also implement a check)
+        username = data.get("username", "")
+        if not username:
+            return Response(status=400)
+
+        request.session['username'] = username
         return Response(status=200)
