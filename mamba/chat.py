@@ -5,12 +5,11 @@ from backend.snake_whisperer.settings import get_mamba_model
 from typing import Dict, List
 
 
-def chat(messages: List[Dict[str, str]], user_message: str) -> str:
+def chat(messages: List[Dict[str, str]]) -> str:
     """
     Predicts a response given the current and past messages
 
     :param messages: past messages
-    :param user_message: current messages
     :return: what mamba thinks the response should be
     """
     mamba_model, tokenizer = get_mamba_model()
